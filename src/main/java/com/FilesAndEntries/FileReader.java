@@ -18,15 +18,12 @@ public class FileReader {
             while ((line = buff.readLine()) != null) {
                 String[] s = strToArrOfStr(line);
                 for (int j = 0; j < s.length; j++) {
-
-                    if (s[j].equals(findText[q]))
-                    {
+                    if (s[j].equals(findText[q])) {
                         if (q == findTextLenght) {
                             return true;
                         }
                         q++;
-                    } else
-                    {
+                    } else {
                         q = 0;
                     }
                 }
@@ -34,7 +31,6 @@ public class FileReader {
         }
         return false;
     }
-
     private String[] strToArrOfStr(String string){
         return string.trim().split("[ ]+");
     }

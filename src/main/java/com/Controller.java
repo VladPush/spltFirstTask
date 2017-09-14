@@ -12,7 +12,7 @@ class main {
 
         FileReader.stringFromUser = "Это город Москва.";
 
-        checkSyntax.dirName = "//NASTYADELL/filesD";           //  C://files              //         //NASTYADELL/filesD
+        checkSyntax.dirName = "d://hhht";           //  C://files              //         //NASTYADELL/filesD
         checkSyntax.extension = "txt";
 
         fileFinder.FindTheEntries();
@@ -21,7 +21,10 @@ class main {
 }
 
 
-
+/*
+long start = System.currentTimeMillis();
+            System.out.println(System.currentTimeMillis() - start);
+* */
 
           /*  InputStream in=null;
             FileOutputStream fOut=null;
