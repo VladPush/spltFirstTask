@@ -6,40 +6,51 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 
-import static com.FilesAndEntries.CheckSyntax.checkSyntaxOfInput;
-
 public class FileFinder {
+
     public static String foolExtension;
     public static String foolDirName;
-    public static  ArrayList<Path> addressOfEntry= new ArrayList<>();
+    public  ArrayList<Path> addressOfEntry= new ArrayList<>();
+    String rootDirname;
+    boolean haveExtension;
+    int index;
+
+    public CheckSyntax checkSyntax = new CheckSyntax();
 
     public void FindTheEntries( ) {
-            try{
-                int strategy = checkSyntaxOfInput();
-                if (strategy == 1 | strategy == 3)
-                {
-                    walkFileTree();
-                }
-                else if (strategy == 2)
-                {
-                    walkNetworkFileTree(new File(foolDirName));
-                }
-            }catch (IOException e){
-                System.out.printf("Системная ошибка: "+ e.getMessage());
+        try{
+            int strategy = checkSyntax.checkSyntaxOfInput();
+            if (strategy == 1 | strategy == 3)
+            {
+                walkFileTree();
             }
-        System.out.println("Адреса файлов со вхождениями:");
-            for(Path s: addressOfEntry){
-                System.out.println(s.toString());
+            else if (strategy == 2)
+            {
+                walkNetworkFileTree(new File(foolDirName));
             }
-    }
+        }catch (IOException e){
+            System.out.printf("Системная ошибка: "+ e.getMessage());
+        }
 
+        System.out.println("Корневая директория: "+ rootDirname);
+
+        if (!addressOfEntry.isEmpty()){
+            System.out.println("Адреса файлов со вхождениями:");
+            for(Path s: addressOfEntry){
+                System.out.println(s.toString().substring(index));
+            }
+        }else{
+            if (haveExtension) {
+            System.out.println("В файлах не найдено вхождений искомой строки.");
+            }else{
+            System.out.println("Файлов удовлетворяющим условию поиска не найдено.");
+            }
+        }
+    }
 
     private void walkFileTree() throws IOException
     {
         Files.walkFileTree(Paths.get(foolDirName), new MyFileVisitor());
-        if (addressOfEntry.isEmpty()){
-            System.out.println("Директория пуста.");
-        }
     }
 
     /*Специальная версия класса SimpleFileVisitor,  в которой переопределяется метод visitFile()*/
@@ -71,8 +82,14 @@ public class FileFinder {
 
     /*Если файл с нужным расширением начинаем поиск по содержимому*/
     private void checkExtension(File file) throws IOException{
+
+        /*Находим индекс и имя корневой директории*/
+        index = file.toPath().toString().indexOf( "\\", 3);
+        rootDirname = file.toPath().toString().substring(0,index);
+
         if (new File(file.toURI()).getName().endsWith(foolExtension)){
-            if (new FileReader().readFile(file.toPath())){
+            haveExtension=true;
+            if (new FileReader().readFile(file.toPath())) {
                 addressOfEntry.add(file.toPath());
             }
         }

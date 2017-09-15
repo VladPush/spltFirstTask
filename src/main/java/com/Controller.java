@@ -8,18 +8,19 @@ class main {
     public static void main(String args[]) {
 
         FileFinder fileFinder = new FileFinder();
-        CheckSyntax checkSyntax = new CheckSyntax();
 
-        FileReader.stringFromUser = "Это город Москва.";
+        FileReader.stringFromUser = "Это город Москва."; //Это город Москва.
 
-        checkSyntax.dirName = "d://hhht";           //  C://files              //         //NASTYADELL/filesD
-        checkSyntax.extension = "txt";
+        fileFinder.checkSyntax.dirName = "//NASTYADELL/filesDв";           //  C://files              //         //NASTYADELL/filesD
+        fileFinder.checkSyntax.extension = "txt";
 
         fileFinder.FindTheEntries();
-
     }
 }
 
+//кодировка когда word - слетает.
+//русские символы в названиях файлов и пробелы проверить
+//сообщения централизовать
 
 /*
 long start = System.currentTimeMillis();

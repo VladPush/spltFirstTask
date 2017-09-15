@@ -31,6 +31,7 @@ public class FileReader {
         }
         return false;
     }
+
     private String[] strToArrOfStr(String string){
         return string.trim().split("[ ]+");
     }
