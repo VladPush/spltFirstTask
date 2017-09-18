@@ -2,16 +2,40 @@ package com;
 
 import com.FilesAndEntries.*;
 import com.FilesAndEntries.FileReader;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 
-class main {
+public class main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        Parent root = FXMLLoader.load(getClass().getResource("/sample.fxml"));//обязательно   /
+
+        Scene scene = new Scene(root);//в себе заключает дерево компонентов 600, 600);
+        scene.getStylesheets().add(0, "style.css");
+        primaryStage.setTitle("Text finder");
+        primaryStage.setResizable(false);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+
+
     public static void main(String args[]) {
+
+        launch(args);
+
 
         FileFinder fileFinder = new FileFinder();
 
-        FileReader.stringFromUser = "Это город Москва."; //Это город Москва.
+        FileReader.stringFromUser =  "Это город Москва.";
 
-        fileFinder.checkSyntax.dirName = "//NASTYADELL/filesDв";           //  C://files              //         //NASTYADELL/filesD
+        fileFinder.checkSyntax.dirName = "C://files";           //  C://files              //         //NASTYADELL/filesD
         fileFinder.checkSyntax.extension = "txt";
 
         fileFinder.FindTheEntries();

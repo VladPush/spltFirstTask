@@ -2,10 +2,11 @@ package com.FilesAndEntries;
 
 public class CheckSyntax {
 
-    public   String extension;
+    public  String extension;
     public  String dirName;
 
          Integer checkSyntaxOfInput(){
+
 
         if (extension.trim().matches("[a-z]{1,50}") | extension.trim().isEmpty())
         {
