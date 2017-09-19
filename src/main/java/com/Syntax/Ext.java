@@ -2,20 +2,21 @@ package com.Syntax;
 
 public class Ext implements Syntax  {
 
-    boolean status;
+    public  boolean status;
 
     @Override
-    public boolean check(String input) {
+    public String check(String input) {
         if (input.trim().matches("[a-z]{1,50}") | input.trim().isEmpty()) {
-            return status = true;
+             status = true;
         }else{
-            return status = false;
+             status = false;
         }
+
+        return getMessage();
     }
 
     @Override
     public String correct(String input) {
-        String result;
         if (input.trim().isEmpty()){
             return ".log";}
         else{
@@ -24,6 +25,11 @@ public class Ext implements Syntax  {
 
     @Override
     public String getMessage() {
-        return "Некорректное расширение.\nПрим. txt | log";
+        if (status){
+            return "Correct extension input. (Def. .log)";
+        }else{
+            return "Некорректное расширение.\nПрим. txt | log";
+        }
+
     }
 }

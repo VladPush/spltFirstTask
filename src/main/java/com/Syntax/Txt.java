@@ -2,18 +2,29 @@ package com.Syntax;
 
 public class Txt implements Syntax  {
 
+    public boolean status;
+
     @Override
-    public boolean check(String input) {
-        return false;
+    public String check(String input) {
+        if (!(input.trim().isEmpty())) {
+             status = true;
+        }else{
+             status = false;
+        }
+        return getMessage();
     }
 
     @Override
     public String correct(String input) {
-        return null;
+        return input.trim();
     }
 
     @Override
     public String getMessage() {
-        return "Введите текст для поиска.";
+        if (status){
+            return "Correct text input.";
+        }else{
+            return "Введите текст для поиска.";
+        }
     }
 }

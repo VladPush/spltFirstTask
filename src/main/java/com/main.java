@@ -1,6 +1,6 @@
 package com;
 
-import com.FilesAndEntries.*;
+import com.FilesAndEntries.FileFinder;
 import com.FilesAndEntries.FileReader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ public class main extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("/sample.fxml"));//обязательно   /
 
-        Scene scene = new Scene(root);//в себе заключает дерево компонентов 600, 600);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(0, "style.css");
         primaryStage.setTitle("Text finder");
         primaryStage.setResizable(false);
@@ -31,14 +31,14 @@ public class main extends Application {
         launch(args);
 
 
-        FileFinder fileFinder = new FileFinder();
+       /* FileFinder fileFinder = new FileFinder();
 
         FileReader.stringFromUser =  "Это город Москва.";
 
         fileFinder.checkSyntax.dirName = "C://files";           //  C://files              //         //NASTYADELL/filesD
         fileFinder.checkSyntax.extension = "txt";
 
-        fileFinder.FindTheEntries();
+        fileFinder.FindTheEntries();*/
     }
 }
 

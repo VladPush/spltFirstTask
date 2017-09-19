@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox stylesheets="style.css" fillHeight="false" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" snapToPixel="false" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fx.Controller">
+<HBox fillHeight="false" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" snapToPixel="false" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fx.Controller">
     <children>
         <VBox minHeight="600.0" minWidth="350.0" prefHeight="600.0" prefWidth="350.0">
             <children>
@@ -22,7 +22,7 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TreeView fx:id="tree" minHeight="579.0" minWidth="300.0" onContextMenuRequested="#buildPath" prefHeight="579.0" prefWidth="300.0">
+                <TreeView fx:id="tree" minHeight="579.0" minWidth="300.0" onContextMenuRequested="#ContextMenuEvent" prefHeight="579.0" prefWidth="300.0">
                     <opaqueInsets>
                         <Insets />
                     </opaqueInsets>
@@ -44,7 +44,7 @@
                             <VBox.margin>
                                 <Insets bottom="3.0" left="3.0" top="5.0" />
                             </VBox.margin></Label>
-                        <TextField fx:id="textfieldDir" accessibleHelp="C://dir/        or //SERVER/dir" minHeight="25.0" minWidth="250.0" prefWidth="250.0" promptText="Root/branch/directory for search">
+                        <TextField fx:id="textfieldDir" accessibleHelp="C://dir/        or //SERVER/dir" minHeight="25.0" minWidth="250.0" prefWidth="250.0" promptText="Root/branch/directory for search" text="files">
                             <opaqueInsets>
                                 <Insets />
                             </opaqueInsets>
@@ -57,7 +57,7 @@
                                 <Insets bottom="3.0" left="3.0" top="5.0" />
                             </VBox.margin>
                         </Label>
-                        <TextArea fx:id="textfieldText" minHeight="50.0" minWidth="250.0" prefHeight="90.0" prefWidth="250.0" promptText="Text for search, LINE FEED is not considered." VBox.vgrow="ALWAYS">
+                        <TextArea fx:id="textfieldText" minHeight="50.0" minWidth="250.0" prefHeight="90.0" prefWidth="250.0" promptText="Text for search, LINE FEED is not considered." text="Это город Москва." VBox.vgrow="ALWAYS">
                             <VBox.margin>
                                 <Insets right="3.0" />
                             </VBox.margin>
@@ -69,12 +69,12 @@
                                         <Insets bottom="10.0" left="3.0" top="13.0" />
                                     </HBox.margin>
                                 </Label>
-                                <TextField fx:id="textfieldExt" accessibleRole="TEXT" alignment="CENTER" minHeight="25.0" minWidth="60.0" prefHeight="25.0" prefWidth="60.0" promptText="log">
+                                <TextField fx:id="textfieldExt" accessibleRole="TEXT" alignment="CENTER" minHeight="25.0" minWidth="60.0" prefHeight="25.0" prefWidth="60.0" promptText="log" text="txt">
                                     <HBox.margin>
                                         <Insets bottom="10.0" left="18.0" top="10.0" />
                                     </HBox.margin>
                                 </TextField>
-                                <Button alignment="CENTER" contentDisplay="TOP" minWidth="65.0" mnemonicParsing="false" onAction="#trySearch" prefWidth="65.0" text="Search" >
+                                <Button alignment="CENTER" contentDisplay="TOP" minWidth="65.0" mnemonicParsing="false" onAction="#ButtonActive" prefWidth="65.0" text="Search">
                                     <HBox.margin>
                                         <Insets left="18.0" right="3.0" top="10.0" />
                                     </HBox.margin>

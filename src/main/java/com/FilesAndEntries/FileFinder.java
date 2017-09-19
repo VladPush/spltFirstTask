@@ -17,7 +17,7 @@ public class FileFinder {
 
     public CheckSyntax checkSyntax = new CheckSyntax();
 
-    public void FindTheEntries( ) {
+    public void FindTheEntries(Boolean typeOfDir) {
         try{
             int strategy = checkSyntax.checkSyntaxOfInput();
             if (strategy == 1 | strategy == 3)

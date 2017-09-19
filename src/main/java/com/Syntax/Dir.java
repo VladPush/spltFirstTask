@@ -2,22 +2,23 @@ package com.Syntax;
 
 public class Dir implements Syntax {
 
-    boolean status;
-
+    public boolean status;
+    public boolean typeOfDir; // 0 - this pc 1 - server pc
     @Override
-    public boolean check(String input) {
+    public String check(String input) {
         if (input.trim().matches("^([A-Za-z]://([\\wа-яА-Я]{1,50}/{0,1}){1,25})") |  input.trim().matches("^(//([\\wа-яА-Я]{1,50}/{0,1}){1,25})") |
            input.trim().matches("^(([\\wа-яА-Я]{1,50}/{0,1}){1,25})")) {
-            return status=true;
+            status=true;
+            if (input.trim().matches("^(//([\\wа-яА-Я]{1,50}/{0,1}){1,25})")){
+                typeOfDir=true;
+            }else{
+                typeOfDir=false;
+            }
+
         }else{
-            return status=false;
+            status=false;
         }
-    }
-
-
-    @Override
-    public String getMessage() {
-        return "Некорректная директория поиска.\nНапр. //SERVER/folder | D://root/folder";
+        return getMessage();
     }
 
     @Override
@@ -30,6 +31,18 @@ public class Dir implements Syntax {
             return input.trim();}
 
     }
+
+    @Override
+    public String getMessage() {
+        if (status){
+            return "Correct directory input.";
+        }else{
+            return "Некорректная директория поиска.\nНапр. //SERVER/folder | D://root/folder";
+        }
+
+    }
+
+
 
 
 }
