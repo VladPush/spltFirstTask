@@ -29,18 +29,9 @@ public class main extends Application {
     public static void main(String args[]) {
 
         launch(args);
-
-
-       /* FileFinder fileFinder = new FileFinder();
-
-        FileReader.stringFromUser =  "Это город Москва.";
-
-        fileFinder.checkSyntax.dirName = "C://files";           //  C://files              //         //NASTYADELL/filesD
-        fileFinder.checkSyntax.extension = "txt";
-
-        fileFinder.FindTheEntries();*/
     }
 }
+
 
 //кодировка когда word - слетает.
 //русские символы в названиях файлов и пробелы проверить

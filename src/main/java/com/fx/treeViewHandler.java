@@ -27,7 +27,7 @@ public class treeViewHandler {
     }
 
 
-    /*Построение дерева*/
+    /*Создание ветви дерева*/
     public  TreeItem<String> makeBranch(String text, TreeItem<String> parent) {
         TreeItem<String> item = new TreeItem<>(text);
         item.setExpanded(true);
@@ -37,37 +37,18 @@ public class treeViewHandler {
 
 
     /*Восстановление path из клика по элементу treeView */
-    public Path returnPath(TreeView<String> treeview){
+    public Path returnPath(TreeView<String> treeview, String rootDir){
         StringBuilder pathBuilder = new StringBuilder();
+
         if (treeview.getSelectionModel().getSelectedItem().getChildren().isEmpty()) {
             for (TreeItem<String> item = treeview.getSelectionModel().getSelectedItem(); item.getValue() != null; item = item.getParent()) {
                 pathBuilder.insert(0, item.getValue());
                 pathBuilder.insert(0, "/");
             }
+            pathBuilder.insert(0,rootDir);
         } else {
             System.out.println("Это директория... Выпускайте Кракена!");
         }
-
         return Paths.get(pathBuilder.toString());
     }
-
-
-    /*Сортировка массива Path по длине*/
-    public void SortByLenght(ArrayList tempList) {
-        for(int i=0;i<tempList.size();i++)
-        {
-            for(int j=0;j<tempList.size();j++)
-            {
-                Path temp;
-                if(tempList.get(i).toString().length() > tempList.get(j).toString().length())
-                {
-                    temp=(Path)tempList.get(i);
-                    tempList.set(i, tempList.get(j));
-                    tempList.set(j,temp);
-                }
-            }
-        }
-    }
-
-
 }

@@ -6,15 +6,14 @@ public class Dir implements Syntax {
     public boolean typeOfDir; // 0 - this pc 1 - server pc
     @Override
     public String check(String input) {
-        if (input.trim().matches("^([A-Za-z]://([\\wа-яА-Я]{1,50}/{0,1}){1,25})") |  input.trim().matches("^(//([\\wа-яА-Я]{1,50}/{0,1}){1,25})") |
+        if (input.trim().matches("^([A-Za-z]:/([\\wа-яА-Я]{1,50}/{0,1}){1,25})") |  input.trim().matches("^(//([\\wа-яА-Я]{1,50}/{0,1}){1,25})") |
            input.trim().matches("^(([\\wа-яА-Я]{1,50}/{0,1}){1,25})")) {
             status=true;
             if (input.trim().matches("^(//([\\wа-яА-Я]{1,50}/{0,1}){1,25})")){
-                typeOfDir=true;
-            }else{
                 typeOfDir=false;
+            }else{
+                typeOfDir=true;
             }
-
         }else{
             status=false;
         }
@@ -24,12 +23,10 @@ public class Dir implements Syntax {
     @Override
     public String correct(String input) {
 
-
         if (input.trim().matches("^(([\\wа-яА-Я]{1,50}/{0,1}){1,25})")) {
-            return "C://" + input.trim();
+            return "C:/" + input.trim();
         } else {
             return input.trim();}
-
     }
 
     @Override
@@ -37,7 +34,7 @@ public class Dir implements Syntax {
         if (status){
             return "Correct directory input.";
         }else{
-            return "Некорректная директория поиска.\nНапр. //SERVER/folder | D://root/folder";
+            return "Некорректная директория поиска.\nНапр. //SERVER/folder | D:/root/folder";
         }
 
     }

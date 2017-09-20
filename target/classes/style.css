@@ -5,3 +5,7 @@
 .button{
     -fx-border-color: cornflowerblue;
 }
+
+.label{
+    -fx-font-size: 14px;
+}

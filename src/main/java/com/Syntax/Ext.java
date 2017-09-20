@@ -20,7 +20,7 @@ public class Ext implements Syntax  {
         if (input.trim().isEmpty()){
             return ".log";}
         else{
-            return "."+ input.trim();}
+            return "." + input.trim();}
     }
 
     @Override
