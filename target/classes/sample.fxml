@@ -78,7 +78,7 @@
                                               <Insets bottom="10.0" left="18.0" top="10.0" />
                                           </HBox.margin>
                                       </TextField>
-                                      <Button fx:id="button" alignment="CENTER" contentDisplay="TOP" minWidth="65.0" mnemonicParsing="false" onMouseClicked="#Clicked" prefWidth="65.0" text="Search">
+                                      <Button fx:id="button" alignment="CENTER" contentDisplay="TOP" minWidth="65.0" mnemonicParsing="false" onMouseClicked="#buildTree" prefWidth="65.0" text="Search">
                                           <HBox.margin>
                                               <Insets left="18.0" right="3.0" top="10.0" />
                                           </HBox.margin>

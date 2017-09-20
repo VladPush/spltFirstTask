@@ -2,33 +2,28 @@ package com.fx;
 
 import com.FilesAndEntries.FileFinder;
 import com.FilesAndEntries.FileReader;
-import com.Syntax.*;
-import com.sun.org.apache.xerces.internal.xs.StringList;
-import com.sun.org.apache.xpath.internal.SourceTree;
+import com.Syntax.Dir;
+import com.Syntax.Ext;
+import com.Syntax.Txt;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import org.apache.any23.encoding.TikaEncodingDetector;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 
-import javax.swing.text.Position;
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class ControllerSample extends  treeViewHandler {
+public class ControllerSample extends treeViewHandler {
 
     private FileFinder fileFinder = new FileFinder();
 
@@ -61,32 +56,38 @@ public class ControllerSample extends  treeViewHandler {
         /*Потеря фокуса на поле ввода*/
         textfieldDir.focusedProperty().addListener((ov, oldV, newV) -> {
             if (!newV) {
-                warningLabel.setText(dir.check(textfieldDir.getText())); }
+                warningLabel.setText(dir.check(textfieldDir.getText()));
+                if (dir.status)
+                    fileFinder.foolDirName = dir.correct(textfieldDir.getText()); //  C://files              //         //NASTYADELL/filesD
+                letButtonWork();
+            }
         });
 
         textfieldText.focusedProperty().addListener((ov, oldV, newV) -> {
             if (!newV) {
-                warningLabel.setText(txt.check(textfieldText.getText())); }
+                warningLabel.setText(txt.check(textfieldText.getText()));
+                if (txt.status)
+                    FileReader.stringFromUser = txt.correct(textfieldText.getText()); // "Это город Москва."
+                letButtonWork();
+            }
         });
 
         textfieldExt.focusedProperty().addListener((ov, oldV, newV) -> {
             if (!newV) {
-                warningLabel.setText(ext.check(textfieldExt.getText())); }
+                warningLabel.setText(ext.check(textfieldExt.getText()));
+                if (ext.status)
+                    fileFinder.foolExtension  = ext.correct(textfieldExt.getText());
+                letButtonWork();
+            }
         });
 
         tree.setShowRoot(false);
+        button.setDisable(true);
     }
 
     /*Поиск и построение дерева по архиву Path !кнопка!*/
-    public void Clicked(MouseEvent mouseEvent)  {
+    public void buildTree(MouseEvent mouseEvent)  {
         TreeItem<String> root = new TreeItem<>();
-        if (txt.status && dir.status && ext.status){
-
-            warningLabel.setTextFill(Color.BLACK);
-
-            FileReader.stringFromUser = txt.correct(textfieldText.getText()); // "Это город Москва."
-            fileFinder.foolDirName    = dir.correct(textfieldDir.getText());  //  C://files              //         //NASTYADELL/filesD
-            fileFinder.foolExtension  = ext.correct(textfieldExt.getText());
 
             /*Обход директории и поиск вхождений*/
             try {
@@ -95,53 +96,120 @@ public class ControllerSample extends  treeViewHandler {
                     buildBranch(s, root, i);
                 }
                 if (root.isLeaf()) {
-                    warningLabel.setText("No entries");
+                    warningLabel.setText("No entries.");
                 }else{
                     warningLabel.setText("Done.");
                 }
-            }catch (NoSuchFieldException | IOException | InvocationTargetException e){
+            }catch (Exception e){
                 warningLabel.setText("Directory is missing: " + e.getMessage());
             }
-        }else{
-            warningLabel.setTextFill(Color.RED);
-        }
 
-        root.setExpanded(true);
         tree.setRoot(root);
     }
 
     /*Восстановление path из клика по элементу treeView  !контекстное меню на treeItem!*/
     public void ContextMenuEvent(ContextMenuEvent contextMenuEvent) {
+        File file = new File(returnPath(tree, fileFinder.rootDirname).toUri());
 
-        /*возвращаем файл по Path который дает returnPath, помещаем его в поток,поток помещаем в символьный поток, буферизируем.*/
-        try (BufferedReader buff = new BufferedReader(new InputStreamReader(new FileInputStream(returnPath(tree,fileFinder.rootDirname).toFile()), "windows-1251"))) {// НАСТРОИТЬ буфер
+        if (file.isDirectory()){
+            warningLabel.setText("It's a directory!");
+        }else{
+            TextArea textArea = null;
+            Tab tab = new Tab();
+            tab.setText(file.toPath().getFileName().toString());
+            try{
+                textArea =  new ReadToTab().moderator(file);
+            }catch (IOException | InvalidFormatException e){ warningLabel.setText("Error: " + e.getMessage());}
+
+            tab.setContent(textArea);
+            tabPane.getTabs().add(tab);
+        }
+    }
+
+    private void letButtonWork(){
+        if (ext.status && dir.status && txt.status)
+            button.setDisable(false);
+        else
+            button.setDisable(true);
+    }
+
+   /* public static Charset guessCharset(InputStream is) throws IOException {
+        return Charset.forName(new TikaEncodingDetector().guessEncoding(is));
+    }*/
+}
+
+
+
+/*    public void ContextMenuEvent(ContextMenuEvent contextMenuEvent) {
+        File file = new File(returnPath(tree, fileFinder.rootDirname).toUri());
+
+        if (file.isDirectory()){
+            warningLabel.setText("It's a directory!");
+        }else{
 
             TextArea textArea = new TextArea();
             Tab tab = new Tab();
-            tab.setText(returnPath(tree,fileFinder.rootDirname).getFileName().toString());
-            String line;
+            tab.setText(file.toPath().getFileName().toString());
 
-            while ((line = buff.readLine()) != null) {
-                textArea.appendText(line);
-                System.out.println(line);
-                if (!(line.trim().isEmpty())){
-                    textArea.appendText("\n");
+            try (FileInputStream fileInputStream = new FileInputStream(file)) {
+
+                if (file.getName().endsWith(".log") | file.getName().endsWith(".txt")) {
+
+                    BufferedReader buff = new BufferedReader(new InputStreamReader(fileInputStream, "windows-1251"));
+                    String line;
+                    while ((line = buff.readLine()) != null) {
+                        textArea.appendText(line);
+                        if (!(line.trim().isEmpty())) {
+                            textArea.appendText("\n");
+                        }
+                    }
+
+                } else if (file.getName().endsWith(".docx")) {
+
+                    XWPFDocument document = new XWPFDocument(fileInputStream);
+                    List<XWPFParagraph> paragraphs = document.getParagraphs();
+                    for (XWPFParagraph para : paragraphs) { //по линиям разбиваем
+                        textArea.appendText(para.getText());
+                    }
+
+                } else if (file.getName().endsWith(".xlsx")) {
+
+                    Workbook wb = WorkbookFactory.create(fileInputStream);
+                    Sheet sheet = wb.getSheetAt(0);
+                    Iterator<Row> rows = sheet.rowIterator();
+                    while (rows.hasNext()) {
+                        Row row = rows.next();
+                        Iterator<Cell> cell = row.cellIterator();
+                        while (cell.hasNext()) {
+                            textArea.appendText(cell.next().toString());
+                            textArea.appendText(" ");
+                        }
+                        textArea.appendText("\n");
+                    }
                 }
-            }
+            }catch (IOException | InvalidFormatException e){ warningLabel.setText("Error: " + e.getMessage());}
+
             tab.setContent(textArea);
             tabPane.getTabs().add(tab);
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+    }*/
 
 
 
-        try {
+
+
+
+
+
+
+
+
+
+
+
+
+       /* try {
             TextArea textArea = new TextArea();
             Tab tab = new Tab();
             tab.setText("jfvkf.docx");
@@ -166,20 +234,10 @@ public class ControllerSample extends  treeViewHandler {
             tab.setContent(textArea);
             tabPane.getTabs().add(tab);
 
-
             fis.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-
-    }
-
-    public static Charset guessCharset(InputStream is) throws IOException {
-        return Charset.forName(new TikaEncodingDetector().guessEncoding(is));
-    }
-
-}
+        }*/
 
 
 /*    public void buildBranch(Path path, TreeItem<String> root, int i) {

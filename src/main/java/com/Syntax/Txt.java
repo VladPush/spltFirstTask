@@ -16,6 +16,7 @@ public class Txt implements Syntax  {
 
     @Override
     public String correct(String input) {
+
         return input.trim();
     }
 

@@ -1,7 +1,5 @@
 package com;
 
-import com.FilesAndEntries.FileFinder;
-import com.FilesAndEntries.FileReader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
