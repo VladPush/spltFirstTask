@@ -5,6 +5,7 @@ import com.FilesAndEntries.FileReader;
 import com.Syntax.Dir;
 import com.Syntax.Ext;
 import com.Syntax.Txt;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
@@ -50,7 +51,7 @@ public class ControllerSample extends treeViewHandler {
             if (!newV) {
                 warningLabel.setText(dir.check(textfieldDir.getText()));
                 if (dir.status)
-                    fileFinder.foolDirName = dir.correct(textfieldDir.getText()); //  C://files              //         //NASTYADELL/filesD
+                    fileFinder.foolDirName = dir.correct(textfieldDir.getText());
                 letButtonWork();
             }
         });
@@ -59,7 +60,7 @@ public class ControllerSample extends treeViewHandler {
             if (!newV) {
                 warningLabel.setText(txt.check(textfieldText.getText()));
                 if (txt.status)
-                    FileReader.stringFromUser = txt.correct(textfieldText.getText()); // "Это город Москва."
+                    FileReader.stringFromUser = txt.correct(textfieldText.getText());
                 letButtonWork();
             }
         });
@@ -103,6 +104,13 @@ public class ControllerSample extends treeViewHandler {
 
     /*Восстановление path из клика по элементу treeView  !контекстное меню на treeItem!*/
     public void ContextMenu(ContextMenuEvent contextMenuEvent) {
+        Runnable task = () -> ThreadDownloadFile();
+        Thread backgroundThread = new Thread(task);// Run the task in a background thread
+        backgroundThread.setDaemon(true);// Terminate the running thread if the application exits
+        backgroundThread.start(); // Start the thread
+    }
+
+    public void ThreadDownloadFile(){
         Path filePath = returnPath(tree, fileFinder.rootDirname);
         String fileName = filePath.getFileName().toString();
         File file = filePath.toFile();
@@ -127,12 +135,12 @@ public class ControllerSample extends treeViewHandler {
 
                 textArea.setWrapText(true);
                 tab.setContent(textArea);
-                tabPane.getTabs().add(tab);
+                Platform.runLater(() -> tabPane.getTabs().add(tab));
             } else {
-                warningLabel.setText("Already open!");
+                Platform.runLater(() -> warningLabel.setText("Already open!"));
             }
         } else {
-            warningLabel.setText("It's a directory!");
+             Platform.runLater(() -> warningLabel.setText("It's a directory!"));
         }
     }
 
@@ -142,5 +150,4 @@ public class ControllerSample extends treeViewHandler {
         else
             button.setDisable(true);
     }
-
 }

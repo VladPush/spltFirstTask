@@ -21,10 +21,7 @@ public class main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
     public static void main(String args[]) {
         launch(args);
     }
 }
-
-//русские символы в названиях файлов и пробелы проверить

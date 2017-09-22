@@ -87,7 +87,7 @@
                               </HBox>
                           </children>
                       </VBox>
-                      <HBox alignment="CENTER_LEFT" disable="true" minHeight="50.0" prefHeight="50.0" prefWidth="250.0">
+                      <HBox  alignment="CENTER_LEFT" disable="true" minHeight="50.0" prefHeight="50.0" prefWidth="250.0">
                           <children>
                               <Label fx:id="warningLabel" />
                           </children>

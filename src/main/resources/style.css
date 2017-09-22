@@ -4,14 +4,11 @@
 
 .tree-cell .tree-disclosure-node .arrow {
     -fx-background-color: dimgrey;
-
 }
 
 .tree-cell:expanded .tree-disclosure-node .arrow {
     -fx-background-color: lightgray;
-
 }
-
 
 .button{
     -fx-font-smoothing-type: gray;
