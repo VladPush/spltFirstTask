@@ -6,7 +6,8 @@ public class Ext implements Syntax  {
 
     @Override
     public String check(String input) {
-        if (input.trim().matches("[a-z]{1,50}") | input.trim().isEmpty()) {
+        input=input.trim();
+        if (input.matches("[a-z]{1,50}") | input.isEmpty()) {
              status = true;
         }else{
              status = false;
@@ -17,18 +18,19 @@ public class Ext implements Syntax  {
 
     @Override
     public String correct(String input) {
-        if (input.trim().isEmpty()){
+        input=input.trim();
+        if (input.isEmpty()){
             return ".log";}
         else{
-            return "." + input.trim();}
+            return "." + input;}
     }
 
     @Override
     public String getMessage() {
         if (status){
-            return "Correct extension input. (Def. .log)";
+            return "Def. .log";
         }else{
-            return "Некорректное расширение.\nПрим. txt | log";
+            return "Incorrect extension.\nE. g. txt | log";
         }
 
     }

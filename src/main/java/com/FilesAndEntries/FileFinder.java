@@ -7,12 +7,10 @@ import java.util.ArrayList;
 
 public class FileFinder {
 
-    public  String foolExtension;
-    public  String foolDirName;
-    public  ArrayList<Path> addressOfEntry;
+    public String foolExtension;
+    public String foolDirName;
     public String rootDirname;
-    int index;
-
+    public ArrayList<Path> addressOfEntry;
 
     public ArrayList<Path> FindTheEntries(Boolean typeOfDir) throws Exception{
         addressOfEntry = new ArrayList<>();
@@ -24,6 +22,7 @@ public class FileFinder {
         return addressOfEntry;
     }
 
+
     private void walkFileTree() throws Exception
     {
         Files.walkFileTree(Paths.get(foolDirName), new MyFileVisitor());
@@ -34,10 +33,8 @@ public class FileFinder {
     private  class  MyFileVisitor extends SimpleFileVisitor<Path>
     {
         public FileVisitResult visitFile(Path path, BasicFileAttributes attributes)  {
-
-            File file = path.toFile();
             try {
-                checkExtension(file);
+                checkExtension(path.toFile());
             } catch (Exception e) {
                 e.printStackTrace(); }
 
@@ -51,22 +48,18 @@ public class FileFinder {
         File[] filesList = curDir.listFiles();
         for(File file : filesList){
             if(file.isDirectory())
-                walkNetworkFileTree(new File(file.toURI()));
+                walkNetworkFileTree(file);
             if(file.isFile()){
                 checkExtension(file);
             }
         }
-
     }
 
 
     /*Если файл с нужным расширением начинаем поиск по содержимому*/
     private void checkExtension(File file) throws Exception{
-
-        /*Находим индекс и имя корневой директории*/
-        index = file.toPath().toString().indexOf( "\\", 3);
-        rootDirname = file.toPath().toString().substring(0,index);
-
+        /*Находим имя корневой директории*/
+        rootDirname = file.toString().substring(0,file.toString().indexOf( "\\", 3));
         if (new File(file.toURI()).getName().endsWith(foolExtension)){
             if (new FileReader().readFile(file.toPath(),foolExtension)) {
                 addressOfEntry.add(file.toPath());
@@ -87,4 +80,5 @@ public class FileFinder {
             }
         }
     }
+
 }

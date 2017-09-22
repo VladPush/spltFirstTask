@@ -33,9 +33,8 @@ public class treeViewHandler {
         return item;
     }
 
-
     /*Восстановление path из клика по элементу treeView */
-    public Path returnPath(TreeView<String> treeView, String rootDir){
+    public Path returnPath(TreeView<String> treeView, String rootDir) throws NullPointerException{
         StringBuilder pathBuilder = new StringBuilder();
         if (treeView.getSelectionModel().getSelectedItem().getChildren().isEmpty()) {
             for (TreeItem<String> item = treeView.getSelectionModel().getSelectedItem(); item.getValue() != null; item = item.getParent()) {

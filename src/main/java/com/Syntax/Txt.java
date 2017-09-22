@@ -23,9 +23,9 @@ public class Txt implements Syntax  {
     @Override
     public String getMessage() {
         if (status){
-            return "Correct text input.";
+            return null;
         }else{
-            return "Введите текст для поиска.";
+            return "Enter the search text.";
         }
     }
 }

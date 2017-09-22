@@ -13,20 +13,21 @@ import java.util.List;
 public class ReadToTab {
     TextArea textArea;
 
+
     TextArea moderator(File file)throws IOException, InvalidFormatException{
         textArea=new TextArea();
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
-            if (file.getName().endsWith(".log") | file.getName().endsWith(".txt")) {
+            String nameOfFile = file.getName();
+            if (nameOfFile.endsWith(".log") | nameOfFile.endsWith(".txt")) {
                 read(new BufferedReader(new InputStreamReader(fileInputStream, "windows-1251")));
 
-            } else if (file.getName().endsWith(".docx")) {
+            } else if (nameOfFile.endsWith(".docx")) {
                 read(new XWPFDocument(fileInputStream));
 
-            } else if (file.getName().endsWith(".xlsx")) {
+            } else if (nameOfFile.endsWith(".xlsx")) {
                 read(WorkbookFactory.create(fileInputStream));
             }
         }
-
     return textArea;
     }
 
@@ -38,6 +39,7 @@ public class ReadToTab {
             if (!(line.trim().isEmpty())) {
                 textArea.appendText("\n");
             }
+
         }
     }
 

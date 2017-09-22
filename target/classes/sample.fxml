@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane minHeight="630.0" minWidth="600.0" prefHeight="630.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fx.ControllerSample">
+<Pane minHeight="620.0" minWidth="593.0" prefHeight="620.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fx.ControllerSample">
    <children>
-      <HBox fillHeight="false" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" snapToPixel="false" stylesheets="style.css">
+      <HBox alignment="TOP_CENTER" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" snapToPixel="false" stylesheets="style.css">
           <children>
               <VBox minHeight="300.0" minWidth="350.0" prefHeight="300.0" prefWidth="350.0">
                   <children>
@@ -28,7 +28,7 @@
                               <Font size="14.0" />
                           </font>
                       </Label>
-                      <TreeView fx:id="tree" minHeight="269.0" minWidth="300.0" onContextMenuRequested="#ContextMenuEvent" prefHeight="269.0" prefWidth="300.0">
+                      <TreeView fx:id="tree" minHeight="269.0" minWidth="300.0" onContextMenuRequested="#ContextMenu" prefHeight="269.0" prefWidth="300.0">
                           <opaqueInsets>
                               <Insets />
                           </opaqueInsets>
@@ -48,7 +48,7 @@
                                       <Insets bottom="3.0" left="3.0" top="5.0" />
                                   </VBox.margin>
                         </Label>
-                              <TextField fx:id="textfieldDir" accessibleHelp="C://dir/        or //SERVER/dir" minHeight="25.0" minWidth="250.0" prefWidth="250.0" promptText="Root/branch/directory for search" text="files">
+                              <TextField fx:id="textfieldDir" accessibleHelp="C://dir/        or //SERVER/dir" minHeight="25.0" minWidth="250.0" prefWidth="250.0" promptText="Root/branch/directory for search" text="//nastyadell/files">
                                   <opaqueInsets>
                                       <Insets />
                                   </opaqueInsets>
@@ -78,7 +78,7 @@
                                               <Insets bottom="10.0" left="18.0" top="10.0" />
                                           </HBox.margin>
                                       </TextField>
-                                      <Button fx:id="button" alignment="CENTER" contentDisplay="TOP" minWidth="65.0" mnemonicParsing="false" onMouseClicked="#buildTree" prefWidth="65.0" text="Search">
+                                      <Button fx:id="button" alignment="CENTER" contentDisplay="TOP" minWidth="65.0" mnemonicParsing="false" onMousePressed="#buildTree" prefWidth="65.0" text="Search">
                                           <HBox.margin>
                                               <Insets left="18.0" right="3.0" top="10.0" />
                                           </HBox.margin>
@@ -87,9 +87,9 @@
                               </HBox>
                           </children>
                       </VBox>
-                      <HBox disable="true" minHeight="50.0" prefHeight="50.0" prefWidth="250.0">
+                      <HBox alignment="CENTER_LEFT" disable="true" minHeight="50.0" prefHeight="50.0" prefWidth="250.0">
                           <children>
-                              <Label fx:id="warningLabel" text="Label" />
+                              <Label fx:id="warningLabel" />
                           </children>
                      <VBox.margin>
                         <Insets />
@@ -104,7 +104,7 @@
       </HBox>
       <VBox alignment="TOP_CENTER" layoutY="300.0" minHeight="330.0" minWidth="600.0" prefHeight="330.0" prefWidth="600.0">
          <children>
-            <TabPane fx:id="tabPane" minWidth="600.0" prefHeight="330.0" prefWidth="600.0" side="BOTTOM">
+            <TabPane fx:id="tabPane" minWidth="597.0" prefHeight="330.0" prefWidth="597.0">
               <tabs>
                 <Tab text="Untitled Tab 1">
                   <content>
@@ -112,6 +112,12 @@
                   </content>
                 </Tab>
               </tabs>
+               <padding>
+                  <Insets left="3.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </TabPane>
          </children>
       </VBox>
